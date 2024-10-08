@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ShoppingCart {
 
     // Create array list for cart to store items
-    public static HashSet<String> cart = new HashSet<>();
+    public static HashSet<String> cart = new HashSet<>(); // Instantiate an object of HashSet
 
     // Create function to display menu
     public static String displayMenu()

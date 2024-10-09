@@ -11,28 +11,43 @@ public class Cart
         System.out.println("Welcome to your shopping cart.");
         System.out.println("=============================="); 
             
-        // displayMenu();
-        // String command = userCommand();
+        displayMenu(); // Show the menu
 
         // Handle user command
         Console cons = System.console();
 
         String userInput = "";
         userInput = cons.readLine("> ");
+
+        String command = userCommand(userInput);
+
+        System.out.printf("command: %s \n", command); // Shows selected command
+        System.out.printf("User input: %s \n", userInput); // Shows full input
+
+        Scanner test = new Scanner(userInput).useDelimiter(",");
+
+        System.out.println(test.next());
+        System.out.println(test.next());
+        System.out.println(test.next());
+        System.out.println(test.next());
+        System.out.println(test.next());
         
-        Scanner scan = new Scanner(userInput);
-        String userCommand = scan.next().trim().toLowerCase();
 
-        String items = "";
+        test.close();
+
+        
+
+        // HashSet = 
+        // String items = "";
 
 
-        scan.close();
 
-        while(!userCommand.equals("quit"))
+
+        /* while(!command.equals("quit"))   
         {
-            System.out.println(userCommand);
+            System.out.println(command);
 
-            switch (userCommand) 
+            switch (command) 
             {
                 case ("list"):
                     System.out.println("listed");                
@@ -51,50 +66,10 @@ public class Cart
                     break;
             }
             
-            userCommand = userCommand();
+            command = userCommand(userInput);
 
-        }
-
-
-
-        /* Do-While loop ============================== <Not in use> ========================================================
-        {  
-            // Display cart status 
-
-            if (userCommand().equals("list"))
-            {
-                // displayCart();
-                System.out.println("listed");
-            }
-
-            // Adding items to cart, one or more items seperated by a comma (,)
-
-            else if (userCommand().equals("add"))
-            {
-                System.out.println("added");
-            }
-
-            // 3. Delete items with user specified index(es)
-            else if (userCommand().equals("delete"))
-            {
-                System.out.println("deleted");
-            }
-            else if (!userCommand().equals("quit"))
-            {
-                // print invalid input
-                System.out.println("Invalid input");
-            }
-            else
-            {
-                continue;
-            }
-            
-        }
-        while(!userCommand().equals("quit")); 
-        ===================================================================================================================== */ 
-
-        
-
+        } */
+   
     } // End of entry point
 
 
@@ -111,20 +86,15 @@ public class Cart
 
     }
 
-    /* public static String userCommand() // Method 2 - Getting user's input
-    {
-         // Handle user command
-        Console cons = System.console();
+    public static String userCommand(String inputLine) // Method 2 - Getting user's input
+    {      
+        Scanner scan = new Scanner(inputLine);
+        String command = scan.next().trim().toLowerCase();
 
-        String userInput = "";
-        userInput = cons.readLine("> ");
-        
-        Scanner scan = new Scanner(userInput);
-        userInput = scan.next().trim().toLowerCase();
         scan.close();
 
-        return userInput;
-    } */
+        return command;
+    }
 
     /* public static void listItems() // Method 2 - List items in cart line by line
     {

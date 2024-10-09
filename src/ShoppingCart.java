@@ -66,8 +66,13 @@ public class ShoppingCart {
 
     }
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
+        for(Integer i = 0 ; i < args.length ; i++)
+        {
+            System.out.println(args[i]);
+        }
+
         System.out.println("Welcome to your shopping cart.");
         System.out.println("=============================="); 
 

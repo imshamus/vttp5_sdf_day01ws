@@ -2,6 +2,7 @@ package src;
 
 import java.io.Console;
 import java.util.Scanner;
+import java.util.HashSet;
 
 public class Cart 
 {
@@ -10,11 +11,28 @@ public class Cart
         System.out.println("Welcome to your shopping cart.");
         System.out.println("=============================="); 
             
-        displayMenu();
+        // displayMenu();
+        // String command = userCommand();
 
-        while(!userCommand().equals("quit"))
+        // Handle user command
+        Console cons = System.console();
+
+        String userInput = "";
+        userInput = cons.readLine("> ");
+        
+        Scanner scan = new Scanner(userInput);
+        String userCommand = scan.next().trim().toLowerCase();
+
+        String items = "";
+
+
+        scan.close();
+
+        while(!userCommand.equals("quit"))
         {
-            switch (userCommand()) 
+            System.out.println(userCommand);
+
+            switch (userCommand) 
             {
                 case ("list"):
                     System.out.println("listed");                
@@ -32,12 +50,14 @@ public class Cart
                     System.out.println("invalid input");
                     break;
             }
-
+            
+            userCommand = userCommand();
 
         }
 
 
-        /* do 
+
+        /* Do-While loop ============================== <Not in use> ========================================================
         {  
             // Display cart status 
 
@@ -70,14 +90,10 @@ public class Cart
             }
             
         }
-        while(!userCommand().equals("quit")); */
+        while(!userCommand().equals("quit")); 
+        ===================================================================================================================== */ 
 
-
-    // 3. Delete by using numbering
-        // if user 0 - invalid enter list number
-        // if user key -ve number throw exception
-    
-    // 4. Terminate/Exit by typing "quit"
+        
 
     } // End of entry point
 
@@ -85,7 +101,7 @@ public class Cart
 
     // METHODS 
     
-    public static void displayMenu() // Method 1
+    public static void displayMenu() // Method 1 - Printing Instructions
     {
          // Create and print menu instructions
          System.out.println("Enter 'list' to display current cart.");
@@ -95,22 +111,39 @@ public class Cart
 
     }
 
-    public static String userCommand() // Method 2
+    /* public static String userCommand() // Method 2 - Getting user's input
     {
          // Handle user command
         Console cons = System.console();
 
-        String userCommand = "";
-
-        userCommand = cons.readLine("> ");
+        String userInput = "";
+        userInput = cons.readLine("> ");
         
-        Scanner scan = new Scanner(userCommand);
-
-        userCommand = scan.next().trim().toLowerCase();
-
+        Scanner scan = new Scanner(userInput);
+        userInput = scan.next().trim().toLowerCase();
         scan.close();
 
-        return userCommand;
+        return userInput;
+    } */
+
+    /* public static void listItems() // Method 2 - List items in cart line by line
+    {
+        HashSet<String> items = new HashSet<>();
+
+        for(int i = 0 ; i < items.size(); i++)
+        {
+            items.add(null)
+        }
+    }
+ */
+    public static void addItems()
+    {
+
+    }
+
+    public static void deleteItems()
+    {
+
     }
     
 

@@ -3,6 +3,7 @@ package src;
 import java.io.Console;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cart 
@@ -158,29 +159,33 @@ public class Cart
                     {
                         indexList.add(indexNew);
                     }
-                    else if(indexNew < 0)
+                    else if(indexNew <= 0)
                     {
                         System.out.println("Please enter a positive number.");
                     }
-
                 }
 
-                catch (NumberFormatException e)
+                catch(NumberFormatException e)
                 {
                     System.out.printf("'%s' is not a valid numeric input. Please enter a valid number. \n", index);
                 }
             }    
             
-            
-            // indexList = sortint[] indexList
-
+            Collections.sort(indexList, Collections.reverseOrder()); // comparing it a different way, sort in descending order
 
             for (Integer itemToRemove : indexList)
             {
-                System.out.println(itemToRemove);
+                try
+                {
+                    System.out.printf("%s is removed from the cart \n", cartList.get(itemToRemove - 1));
+                    cartList.remove(itemToRemove - 1);
 
-                System.out.printf("%s is removed from the cart", cartList.get(itemToRemove - 1));
-                cartList.remove(itemToRemove - 1);
+                }
+                
+                catch(IndexOutOfBoundsException e)
+                {
+                    System.out.println("Please enter a valid numeric index as shown in 'list'");
+                }
             }
 
         }

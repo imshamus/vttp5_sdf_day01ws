@@ -2,10 +2,16 @@ package src;
 
 import java.io.Console;
 import java.util.Scanner;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cart 
 {
+    // Create a cart variable to hold items at class level (Global)
+    public static List<String> cartList = new ArrayList<>();
+    public static List<Integer> indexList = new ArrayList<>();
+
+
     public static void main(String[] args) 
     {
         System.out.println("Welcome to your shopping cart.");
@@ -21,54 +27,60 @@ public class Cart
 
         String command = userCommand(userInput);
 
-        System.out.printf("command: %s \n", command); // Shows selected command
-        System.out.printf("User input: %s \n", userInput); // Shows full input
+        // System.out.printf("User input: %s \n", userInput); // Shows full input
+        // System.out.printf("command: %s \n", command); // Shows selected command
 
-        Scanner test = new Scanner(userInput).useDelimiter(",");
-
-        System.out.println(test.next());
-        System.out.println(test.next());
-        System.out.println(test.next());
-        System.out.println(test.next());
-        System.out.println(test.next());
-        
-
-        test.close();
-
-        
-
-        // HashSet = 
-        // String items = "";
-
-
-
-
-        /* while(!command.equals("quit"))   
+        while(!command.equals("quit"))   
         {
-            System.out.println(command);
-
             switch (command) 
-            {
+            {   
                 case ("list"):
-                    System.out.println("listed");                
+
+                    if(cartList.isEmpty())
+                    {
+                        System.out.println("Your cart is empty. Add items using the 'Add' command.");
+                    }
+                    else
+                    {
+                        int i = 1;
+                        for(String item : cartList)
+                        {
+                            System.out.printf("%d. %s \n", i, item);
+                            i++;
+                        }
+                        System.out.println(cartList);
+                    }          
                     break;
+
                 case ("add"):
-                    System.out.println("added");
+
+                    addItems(userInput); 
+                    // System.out.println("added");
                     break;
+
                 case ("delete"):
-                    System.out.println("deleted");
+                    
+                    deleteItems(userInput);
+                    indexList.clear();
                     break;
+
                 case("quit"):
                     System.exit(0);
-        
+                    break;
+
+                case("menu"):
+                    displayMenu();
+                    break;
+
                 default:
-                    System.out.println("invalid input");
+                    System.out.println("Invalid input.. Enter 'menu' for instructions." );
                     break;
             }
             
+            userInput = cons.readLine("> ");
             command = userCommand(userInput);
 
-        } */
+        }
    
     } // End of entry point
 
@@ -82,7 +94,8 @@ public class Cart
          System.out.println("Enter 'list' to display current cart.");
          System.out.println("Enter 'add'<SPACE><ITEM> to add items to cart.");
          System.out.println("Enter 'delete'<SPACE><S/N> to delete items from cart.");
-         System.out.println("Enter 'quit' to terminate program."); 
+         System.out.println("Enter 'quit' to terminate program.");
+         System.out.println("Enter 'menu' to display instructions again."); 
 
     }
 
@@ -96,23 +109,81 @@ public class Cart
         return command;
     }
 
-    /* public static void listItems() // Method 2 - List items in cart line by line
-    {
-        HashSet<String> items = new HashSet<>();
 
-        for(int i = 0 ; i < items.size(); i++)
+    public static List<String> addItems(String inputLine) // Method 3 - Adding Items
+    {
+        String itemList = inputLine.toLowerCase().substring(4);
+        String[] updatedItemList = itemList.split(",");
+
+        for(String item : updatedItemList)
         {
-            items.add(null)
+            item = item.trim();
+
+            if(!cartList.contains(item))
+            {
+                cartList.add(item);
+                System.out.printf("%s added to cart. \n", item);
+            }
+            else
+            {
+                System.out.printf("%s is already in cart and won't be added again. \n", item);
+            }
         }
-    }
- */
-    public static void addItems()
-    {
+
+        return cartList;
 
     }
 
-    public static void deleteItems()
+    public static void deleteItems(String inputLine) // Method 4 - deleting items
     {
+        String indexes = inputLine.substring(7);
+        String[] updatedIndexes = indexes.split(",");
+
+        if (cartList.isEmpty())
+        {
+            System.out.println("Please use 'add' to add something to cart first.");
+        }
+
+        else
+        {
+            for(String index : updatedIndexes)
+            {   
+                index = index.trim();
+
+                try
+                {
+                    Integer indexNew = Integer.parseInt(index); 
+                                
+                    if(!indexList.contains(indexNew))
+                    {
+                        indexList.add(indexNew);
+                    }
+                    else if(indexNew < 0)
+                    {
+                        System.out.println("Please enter a positive number.");
+                    }
+
+                }
+
+                catch (NumberFormatException e)
+                {
+                    System.out.printf("'%s' is not a valid numeric input. Please enter a valid number. \n", index);
+                }
+            }    
+            
+            
+            // indexList = sortint[] indexList
+
+
+            for (Integer itemToRemove : indexList)
+            {
+                System.out.println(itemToRemove);
+
+                System.out.printf("%s is removed from the cart", cartList.get(itemToRemove - 1));
+                cartList.remove(itemToRemove - 1);
+            }
+
+        }
 
     }
     

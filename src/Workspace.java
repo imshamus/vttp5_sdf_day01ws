@@ -38,8 +38,51 @@ public class Workspace {
         while(!userCommand().equals("quit")); 
         ===================================================================================================================== */ 
 
+    //     public static String userItems(String inputItem)
+    // {
+    //     String item = inputItem.substring(4);
+        
+    //     return item;
+    // }
+
+
+
+    //  Scanner test = new Scanner(userInput);
+
+    //     System.out.println(test.next());
+    //     System.out.println(test.next());
+    //     System.out.println(test.next());
+    //     System.out.println(test.next());
+    //     System.out.println(test.next());
         
 
+    //     test.close();
     
+
+//     for (String s : updatedItemList)
+//     {
+//         cart.add(s.trim());
+//     }
+
+// for(int i = 0; i < cart.size(); i++)
+// System.out.printf("%d. %s \n", i, item);
+
+// for(int j = 0; j < cart.size(); j++)
+//             {
+//                 System.out.println(cart.remove(command));
+//             }
+
+// public static void deleteItems(HashSet<String> cartItems)
+
 }
 
+// if(cartItems.isEmpty())
+// {
+//     System.out.println("No items in cart. Please add items to cart using the 'add' command.");
+// }
+// else
+// {
+//     List<String> c = new ArrayList<>(cartItems);
+    
+//     System.out.println(cart);
+// }

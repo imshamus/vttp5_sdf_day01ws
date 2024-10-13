@@ -61,4 +61,29 @@ insensitive)
 • delete - delete an item from the cart based on the item’s index (from
 list command). If an incorrect index is provided, display an error message
 
-git checkout -b feature/implement-shopping-cart-db  # Create and switch to your new branch
+git checkout -b feature/implement-shopping-cart-db  # Create and switch to your new branch 
+checkout switches the branch, -b creates the new branch.
+
+git add .  # Add your changes
+git commit -m "Started implementing ShoppingCartDB and directory management"
+git push -u origin feature/implement-db
+
+bugfix/: Used for branches that fix a bug.
+hotfix/: Used for urgent fixes that need to go out quickly.
+release/: Used for preparing a new release of the project.
+chore/: For minor tasks that don't add features or fix bugs (e.g., refactoring, updating documentation).
+
+The / gives the branch name a hierarchical structure, like folders in a file system. This makes it easier to sort and filter branches, especially in large projects where there are many branches.
+For example, if you're working on multiple features, you might have branches like:
+feature/user-authentication
+feature/payment-integration
+feature/implement-shopping-cart-db
+
+Merging
+git checkout main  # or git checkout master
+git pull origin main  # or git pull origin master
+git merge feature/implement-shopping-cart-db
+git add .  # Stage the resolved files
+git commit -m "Merged feature/implement-shopping-cart-db into main"
+git push origin main  # or git push origin master
+

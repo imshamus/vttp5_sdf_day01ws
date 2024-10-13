@@ -1,6 +1,11 @@
 package src;
 
 import java.io.Console;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,17 +18,95 @@ public class Cart
     public static List<Integer> indexList = new ArrayList<>();
 
 
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException 
     {
+        String cartdb = "";
+
+        if(args.length > 0)
+        {
+            cartdb = args[0];
+            File cartDirectory = new File(cartdb);
+
+            if(!cartDirectory.exists())
+            {
+                cartDirectory.mkdir();
+            }
+        }
+        else
+        {
+            cartdb = "db";
+            File cartDirectory = new File(cartdb);
+
+            if(!cartDirectory.exists())
+            {
+                cartDirectory.mkdir();
+            }
+        }
+                       
         System.out.println("Welcome to your shopping cart.");
         System.out.println("=============================="); 
-            
+
+         // Handle user command
+        Console cons = System.console();
+        String userInput = "";
+
+        // Do-While for login
+        do
+        {   
+            System.out.println("Please login by entering 'login'<SPACE><Username>.");
+            userInput = cons.readLine("> "); 
+
+            if(userInput.startsWith("login"))
+            {
+                System.out.println("good");
+            }
+
+        } while(!userInput.startsWith("login"));
+        
+       
+        // Handle user command
+               
+
+
+        // String loginCommand = userInput.split(" ")[0];
+        // String userName = userInput.split(" ")[1];
+        
+        // System.out.println(loginCommand);
+        // System.out.println(userName);
+        
+        // while (!loginCommand.equals("login"))
+        // {
+        //     System.out.println("Please login");
+        //     userInput = cons.readLine("> ");        
+        //     loginCommand = userInput.split(" ")[0];
+        //     userName = userInput.split(" ")[1];
+        // }
+
+        // while (!userName.equals("login"))
+        // {
+        //     System.out.println("Please login by entering 'login'<SPACE><Username>.");
+        //     userInput = cons.readLine("> ");   
+        //     userName = userCommand(userInput);  
+        // }
+        
+        // while(userName.equals("login"))
+        // {
+        //     System.out.println("Please login with your username");
+        //     userName = cons.readLine("> ");
+
+        //     if(!userName.isEmpty())
+        //     {
+        //         System.out.printf("%s logging in.. \n", userName);
+        //     }
+        //     else
+        //     {
+        //         continue;
+        //     }
+        // }
+
         displayMenu(); // Show the menu
 
-        // Handle user command
-        Console cons = System.console();
-
-        String userInput = "";
+        
         userInput = cons.readLine("> ");
 
         String command = userCommand(userInput);

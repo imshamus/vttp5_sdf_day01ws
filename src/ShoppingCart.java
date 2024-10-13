@@ -18,9 +18,11 @@ public class ShoppingCart {
         System.out.println("Enter 'list' to display current cart.");
         System.out.println("Enter 'add'<SPACE><ITEM> to add items to cart.");
         System.out.println("Enter 'delete'<SPACE><S/N> to delete items from cart.");
-        System.out.println("Enter 'quit' to terminate program.");  
+        System.out.println("Enter 'save' to save your cart contents.");
+        System.out.println("Enter 'users' to view all users."); 
+        System.out.println("Enter 'quit' to terminate program."); 
                         
-        // Handle user input
+        // Handle user input 
         Console cons = System.console();
         
         // String userInput = "";

@@ -60,3 +60,5 @@ Item names are case sensitive (or you can try implementing case
 insensitive)
 • delete - delete an item from the cart based on the item’s index (from
 list command). If an incorrect index is provided, display an error message
+
+git checkout -b feature/implement-shopping-cart-db  # Create and switch to your new branch

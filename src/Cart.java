@@ -20,35 +20,17 @@ public class Cart
     
 
 
-    public static void main(String[] args) throws IOException 
+    public static void main(String[] args) throws IOException
     {
         String folderName;
-
-        if(args.length > 0 && !args[0].isEmpty())
+        Path folder;
+        
+        if(args.length > 0) // if that args are passed 
         {
             folderName = args[0]; // set folder name from args
-        }
-        else
-        {
-            folderName = "db"; // set folder name to default "db"
-        }
 
-        Path folder = Paths.get(folderName);
+            folder = Paths.get(folderName);
 
-        if(folderName.equals("db"))
-        {
-            if(!Files.exists(folder))
-                {
-                    Files.createDirectory(folder);
-                    System.out.println("No folder specified,'db' folder created to store user shopping cart. \n");
-                }
-                else
-                {
-                    System.out.println("No folder specified, storing user shopping cart in existing 'db' folder. \n");
-                }
-        }
-        else
-        {
             if(!Files.exists(folder))
                 {
                     Files.createDirectory(folder);
@@ -59,76 +41,48 @@ public class Cart
                     System.out.printf("'%s' folder has already been created. Cart would be stored in '%s' \n", folderName, folderName);
                 }
         }
+        else
+        {
+            folderName = "cartdb"; // set folder name to default "db"
+
+            folder = Paths.get(folderName);
+
+            if(!Files.exists(folder))
+                {
+                    Files.createDirectory(folder);
+                    System.out.println("No folder specified,'db' folder created to store user shopping cart. \n");
+                }
+                else
+                {
+                    System.out.println("No folder specified, storing user shopping cart in existing 'db' folder. \n");
+                }
+        }
         
         System.out.println("Welcome to your shopping cart.");
         System.out.println("==============================");
 
          // Handle user command
         Console cons = System.console();
-        String userInput = "";
 
-        // Do-While for login
-        do
-        {   
-            System.out.println("Please login by entering 'login'<SPACE><Username>.");
-            userInput = cons.readLine("> "); 
+        System.out.println("Please login by entering 'login'<SPACE><USERNAME>.");
+        String userInput = cons.readLine("> ").toLowerCase(); 
 
-            if(userInput.startsWith("login"))
-            {   
-                String userName = userInput.substring(5).trim();
-
-                if(userName.length() > 0) // Means there is a username after login
-                {                   
-                    Path p = Paths.get(folderName).resolve(userName + ".txt"); // or can use userName.concat(".txt");
-                    // Path userFile = Paths.get(folderName, userName + ".txt"); also can
-
-                    if(!Files.exists(p))
-                    {
-                        Files.createFile(p);
-
-                        File f = p.toFile();
-                        String absPath = f.getAbsolutePath();
-
-                        System.out.printf("Logging '%s' in.. Created '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
-                        System.out.println();
-
-                        break;
-                    }
-                    else
-                    {
-                        File f = p.toFile(); 
-                        String absPath = f.getAbsolutePath();
-
-                        System.out.printf("Logging '%s' in.. Using '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
-                        System.out.println();
-
-                        break;
-                    }
-
-                }
-                else
-                {
-                    System.out.println("Invalid username. \n");
-                }
-            }
-
-        } while(true);
-        
-
-        displayMenu(); // Show the menu
-
-        
+        userLogin(userInput, folderName); // Login user       
+        displayMenu(); // Show the menu after successful login
+ 
         userInput = cons.readLine("> ");
-
         String command = userCommand(userInput);
-
-        // System.out.printf("User input: %s \n", userInput); // Shows full input
-        // System.out.printf("command: %s \n", command); // Shows selected command
 
         while(!command.equals("quit"))   
         {
             switch (command) 
             {   
+                case("login"):
+
+                    userLogin(userInput, folderName);
+                    displayMenu();
+                    break;
+               
                 case ("list"):
 
                     if(cartList.isEmpty())
@@ -182,15 +136,66 @@ public class Cart
 
 
     // METHODS 
+
+    public static void userLogin(String userInput, String folderName) throws IOException // Method 1 - Do-While for login
+    {
+        do
+        {   
+            if(userInput.startsWith("login"))
+            {   
+                String userName = userInput.substring(5).trim();
+                userList.add(userName);
+
+                if(userName.length() > 0) // Means there is a username after login
+                {                   
+                    Path p = Paths.get(folderName).resolve(userName + ".txt"); // or can use userName.concat(".txt");
+                    // Path userFile = Paths.get(folderName, userName + ".txt"); also can
+
+                    if(!Files.exists(p))
+                    {
+                        Files.createFile(p);
+
+                        File f = p.toFile();
+                        String absPath = f.getAbsolutePath();
+
+                        System.out.printf("Logging '%s' in.. Created '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
+                        System.out.println();
+
+                        break;
+                    }
+                    else
+                    {
+                        File f = p.toFile(); 
+                        String absPath = f.getAbsolutePath();
+
+                        System.out.printf("Logging '%s' in.. Using '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
+                        System.out.println();
+
+                        break;
+                    }
+
+                }
+                else
+                {
+                    System.out.println("Invalid username. Please login with 'Login'<SPACE><USERNAME>\n");
+                }
+            }
+
+        } while(true);
+
+    }   
     
     public static void displayMenu() // Method 1 - Printing Instructions
     {
          // Create and print menu instructions
-         System.out.println("Enter 'list' to display current cart.");
-         System.out.println("Enter 'add'<SPACE><ITEM> to add items to cart.");
-         System.out.println("Enter 'delete'<SPACE><S/N> to delete items from cart.");
-         System.out.println("Enter 'quit' to terminate program.");
-         System.out.println("Enter 'menu' to display instructions again."); 
+         System.out.println("To login other user(s):            Enter 'login'<SPACE><USERNAME>");
+         System.out.println("To display list of user(s):        Enter 'users'");
+         System.out.println("To display current user's cart:    Enter 'list'");
+         System.out.println("To add items to cart:              Enter 'add'<SPACE><ITEM>");
+         System.out.println("To delete items from cart:         Enter 'delete'<SPACE><S/N>");
+         System.out.println("To save current user's cart:       Enter 'save'");
+         System.out.println("To terminate program:              Enter 'quit'");
+         System.out.println("To display instructions again:     Enter 'menu'"); 
 
     }
 
@@ -203,7 +208,6 @@ public class Cart
 
         return command;
     }
-
 
     public static List<String> addItems(String inputLine) // Method 3 - Adding Items
     {

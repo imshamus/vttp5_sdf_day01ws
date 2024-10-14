@@ -33,13 +33,13 @@ public class Cart
             folderName = "db"; // set folder name to default "db"
         }
 
-        Path directory = Paths.get(folderName);
+        Path folder = Paths.get(folderName);
 
         if(folderName.equals("db"))
         {
-            if(!Files.exists(directory))
+            if(!Files.exists(folder))
                 {
-                    Files.createDirectory(directory);
+                    Files.createDirectory(folder);
                     System.out.println("No folder specified,'db' folder created to store user shopping cart. \n");
                 }
                 else
@@ -49,9 +49,9 @@ public class Cart
         }
         else
         {
-            if(!Files.exists(directory))
+            if(!Files.exists(folder))
                 {
-                    Files.createDirectory(directory);
+                    Files.createDirectory(folder);
                     System.out.printf("'%s' folder created to store user shopping cart. \n", folderName);
                 }
                 else
@@ -75,65 +75,45 @@ public class Cart
 
             if(userInput.startsWith("login"))
             {   
-                if(userInput.length() > 6)
-                {
-                    String userName = userInput.substring(6).trim();
-                    
-                    Path userFile = Paths.get(folderName).resolve(userName + ".txt"); // or can use userName.concat(".txt");
+                String userName = userInput.substring(5).trim();
+
+                if(userName.length() > 0) // Means there is a username after login
+                {                   
+                    Path p = Paths.get(folderName).resolve(userName + ".txt"); // or can use userName.concat(".txt");
                     // Path userFile = Paths.get(folderName, userName + ".txt"); also can
 
-                    Files.createFile(userFile);
+                    if(!Files.exists(p))
+                    {
+                        Files.createFile(p);
+
+                        File f = p.toFile();
+                        String absPath = f.getAbsolutePath();
+
+                        System.out.printf("Logging '%s' in.. Created '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
+                        System.out.println();
+
+                        break;
+                    }
+                    else
+                    {
+                        File f = p.toFile(); 
+                        String absPath = f.getAbsolutePath();
+
+                        System.out.printf("Logging '%s' in.. Using '%s.txt' file to store cart at <%s> \n", userName, userName, absPath);
+                        System.out.println();
+
+                        break;
+                    }
 
                 }
                 else
                 {
-                    System.out.println("Please enter a username after 'login'. \n");
+                    System.out.println("Invalid username. \n");
                 }
-                
             }
 
-        } while(!userInput.startsWith("login"));
+        } while(true);
         
-       
-        // Handle user command
-               
-
-
-        // String loginCommand = userInput.split(" ")[0];
-        // String userName = userInput.split(" ")[1];
-        
-        // System.out.println(loginCommand);
-        // System.out.println(userName);
-        
-        // while (!loginCommand.equals("login"))
-        // {
-        //     System.out.println("Please login");
-        //     userInput = cons.readLine("> ");        
-        //     loginCommand = userInput.split(" ")[0];
-        //     userName = userInput.split(" ")[1];
-        // }
-
-        // while (!userName.equals("login"))
-        // {
-        //     System.out.println("Please login by entering 'login'<SPACE><Username>.");
-        //     userInput = cons.readLine("> ");   
-        //     userName = userCommand(userInput);  
-        // }
-        
-        // while(userName.equals("login"))
-        // {
-        //     System.out.println("Please login with your username");
-        //     userName = cons.readLine("> ");
-
-        //     if(!userName.isEmpty())
-        //     {
-        //         System.out.printf("%s logging in.. \n", userName);
-        //     }
-        //     else
-        //     {
-        //         continue;
-        //     }
-        // }
 
         displayMenu(); // Show the menu
 

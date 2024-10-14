@@ -80,9 +80,14 @@ public class Cart
                 case("login"):
 
                     userLogin(userInput, folderName);
+                    addUsers(userInput);
                     displayMenu();
                     break;
-               
+
+                case("users"):
+                    System.out.println(userList);
+                    break;
+
                 case ("list"):
 
                     if(cartList.isEmpty())
@@ -144,7 +149,10 @@ public class Cart
             if(userInput.startsWith("login"))
             {   
                 String userName = userInput.substring(5).trim();
-                userList.add(userName);
+                if (!userList.contains(userName))
+                {
+                    userList.add(userName);
+                }
 
                 if(userName.length() > 0) // Means there is a username after login
                 {                   
@@ -207,6 +215,23 @@ public class Cart
         scan.close();
 
         return command;
+    }
+    
+    public static List<String> addUsers(String inputLine)
+    {
+        String userName = inputLine.substring(5).trim();
+
+        if(!userList.contains(userName))
+        {
+            userList.add(userName);
+        }
+        else
+        {
+            System.out.printf("%s is already logged into the system. \n", userName);
+        }
+        
+
+        return userList;
     }
 
     public static List<String> addItems(String inputLine) // Method 3 - Adding Items

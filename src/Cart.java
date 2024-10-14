@@ -16,35 +16,52 @@ public class Cart
     // Create a cart variable to hold items at class level (Global)
     public static List<String> cartList = new ArrayList<>();
     public static List<Integer> indexList = new ArrayList<>();
+    public static List<String> userList = new ArrayList<>();
+    
 
 
     public static void main(String[] args) throws IOException 
     {
-        String cartdb = "";
+        String folderName;
 
-        if(args.length > 0)
+        if(args.length > 0 && !args[0].isEmpty())
         {
-            cartdb = args[0];
-            File cartDirectory = new File(cartdb);
-
-            if(!cartDirectory.exists())
-            {
-                cartDirectory.mkdir();
-            }
+            folderName = args[0]; // set folder name from args
         }
         else
         {
-            cartdb = "db";
-            File cartDirectory = new File(cartdb);
-
-            if(!cartDirectory.exists())
-            {
-                cartDirectory.mkdir();
-            }
+            folderName = "db"; // set folder name to default "db"
         }
-                       
+
+        Path directory = Paths.get(folderName);
+
+        if(folderName.equals("db"))
+        {
+            if(!Files.exists(directory))
+                {
+                    Files.createDirectory(directory);
+                    System.out.println("No folder specified,'db' folder created to store user shopping cart. \n");
+                }
+                else
+                {
+                    System.out.println("No folder specified, storing user shopping cart in existing 'db' folder. \n");
+                }
+        }
+        else
+        {
+            if(!Files.exists(directory))
+                {
+                    Files.createDirectory(directory);
+                    System.out.printf("'%s' folder created to store user shopping cart. \n", folderName);
+                }
+                else
+                {
+                    System.out.printf("'%s' folder has already been created. Cart would be stored in '%s' \n", folderName, folderName);
+                }
+        }
+        
         System.out.println("Welcome to your shopping cart.");
-        System.out.println("=============================="); 
+        System.out.println("==============================");
 
          // Handle user command
         Console cons = System.console();
@@ -57,8 +74,22 @@ public class Cart
             userInput = cons.readLine("> "); 
 
             if(userInput.startsWith("login"))
-            {
-                System.out.println("good");
+            {   
+                if(userInput.length() > 6)
+                {
+                    String userName = userInput.substring(6).trim();
+                    
+                    Path userFile = Paths.get(folderName).resolve(userName + ".txt"); // or can use userName.concat(".txt");
+                    // Path userFile = Paths.get(folderName, userName + ".txt"); also can
+
+                    Files.createFile(userFile);
+
+                }
+                else
+                {
+                    System.out.println("Please enter a username after 'login'. \n");
+                }
+                
             }
 
         } while(!userInput.startsWith("login"));

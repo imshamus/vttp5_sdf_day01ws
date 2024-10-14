@@ -86,3 +86,10 @@ public class Workspace {
     
 //     System.out.println(cart);
 // }
+
+// String fileName = args[1];
+        
+        // I want to refer to a file named "fileName" in "folderName"
+        // Path directory = Paths.get(folderName, fileName); 
+        // Path myFilePath = Paths.get("myFolder/myFile.txt");  // I want to refer to a file named "myFile.txt" in "myFolder"
+        

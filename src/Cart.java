@@ -65,6 +65,7 @@ public class Cart
         Console cons = System.console();
 
         System.out.println("Please login by entering 'login'<SPACE><USERNAME>.");
+        System.out.println("Exit the program by entering 'quit'.");
         String userInput = cons.readLine("> ").toLowerCase(); 
 
         userLogin(userInput, folderName); // Login user       
